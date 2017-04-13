@@ -1,4 +1,5 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
 
 def config = rootProject.ext.android
 def librarys = rootProject.ext.dependencies
@@ -6,13 +7,15 @@ def librarys = rootProject.ext.dependencies
 android {
     compileSdkVersion config.compileSdkVersion
     buildToolsVersion config.buildToolsVersion
+
     defaultConfig {
-        applicationId "com.zhaobo.moudledevpro"
         minSdkVersion config.minSdkVersion
         targetSdkVersion config.targetSdkVersion
         versionCode config.versionCode
         versionName config.versionName
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -20,6 +23,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    greendao{
+        //schemaVersion表示数据库版本号，每次数据库升级的时候我们修改这里的版本号即可
+        schemaVersion 1
+        //targetGenDir表示greenDAO生成的DAOMaster和DaoSession的位置
+        targetGenDir 'src/main/java'
+    }
+
 }
 
 dependencies {
@@ -27,8 +38,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile project(':dbmoudle')
     compile librarys.supportv7
+    compile project(':utilslib')
+    compile 'org.greenrobot:greendao:3.1.0'
     testCompile 'junit:junit:4.12'
-//    releaseCompile project 可以在发布版本里再加入模块不然影响性能
 }

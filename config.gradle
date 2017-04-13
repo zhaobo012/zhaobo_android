@@ -1,0 +1,16 @@
+ext {
+    android = [
+            compileSdkVersion: 25,
+            buildToolsVersion: "25.0.1",
+            targetSdkVersion : 25,
+            minSdkVersion    : 19,
+            versionCode      : 100,
+            versionName      : "1.0.0"]
+    dependencies = [
+            "supportv7" : 'com.android.support:appcompat-v7:25.0.0',
+            "supportv4" : 'com.android.support:appcompat-v4:25.0.0',
+            "multidex" : 'com.android.support:multidex:1.0.1',
+            "design" : 'com.android.support:design:24.0.0',
+            "recyclerview" : 'com.android.support:recyclerview-v7:25.0.0',
+            "cardview" : 'com.android.support:cardview-v7:24.0.0']
+}
