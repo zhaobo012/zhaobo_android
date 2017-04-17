@@ -51,10 +51,9 @@ public class DBHelper {
      */
     public void initOpenHelper(@NonNull Context context) {
         try {
-            mHelper = getOpenHelper(context, DB_NAME);
+            mHelper = getOpenHelper(context, DB_NAME,null);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.i("543","exception:"+e.getMessage());
         }
         //openWritableDb();
     }
@@ -66,16 +65,26 @@ public class DBHelper {
      * @param dataBaseName
      */
     public void initOpenHelper(@NonNull Context context, @NonNull String dataBaseName) {
-        mHelper = getOpenHelper(context, dataBaseName);
+        mHelper = getOpenHelper(context, dataBaseName,null);
         //openWritableDb();
+    }
+
+    /**
+     * 初始化OpenHelper     *
+     *
+     * @param context
+     * @param dataBaseName
+     */
+    public void initOpenHelper(@NonNull Context context, @NonNull String dataBaseName,@NonNull String userId) {
+        mHelper = getOpenHelper(context, dataBaseName,userId);
     }
 
     /**
      * 在applicaiton中初始化DatabaseHelper
      */
-    private DaoMaster.DevOpenHelper getOpenHelper(@NonNull Context context, @Nullable String dataBaseName) {
+    private DaoMaster.DevOpenHelper getOpenHelper(@NonNull Context context, @Nullable String dataBaseName,String userId) {
         closeDbConnections();
-        return new DaoMaster.DevOpenHelper(new GreenDaoContext(context), dataBaseName, null);
+        return new DaoMaster.DevOpenHelper(new GreenDaoContext(context,userId), dataBaseName, null);
     }
 
     /**

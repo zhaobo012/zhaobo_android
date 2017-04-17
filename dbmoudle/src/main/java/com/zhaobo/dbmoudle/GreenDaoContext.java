@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
+import android.test.suitebuilder.TestMethod;
+import android.text.TextUtils;
 
+import com.zhaobo.utilslib.FileUtils;
 import com.zhaobo.utilslib.SdCardUtils;
 
 import java.io.File;
@@ -15,13 +18,20 @@ import java.io.File;
 
 public class GreenDaoContext extends ContextWrapper {
 
-    private String currentUserId = "110";
+    private String currentUserId = "default";
     private Context mContext;
 
-    public GreenDaoContext(Context context) {
+    /**
+     * 可以根据用户名字来创建不同的数据库，防止出现调用错误的现象
+     * @param context 系统上下文
+     * @param userId 用户的标志
+     */
+    public GreenDaoContext(Context context,String userId) {
         super(context);
         this.mContext = context;
-        //this.currentUserId = AppUserCache.userInfo.getUserId();
+        if(!TextUtils.isEmpty(userId)){
+            this.currentUserId=userId;
+        }
     }
 
     /**
@@ -32,13 +42,16 @@ public class GreenDaoContext extends ContextWrapper {
     @Override
     public File getDatabasePath(String dbName) {
         String path = SdCardUtils.getDatabaseDir(mContext);
-        //File baseFile = AppPathUtil.getDbCacheDir(mContext);
         StringBuffer buffer = new StringBuffer();
         buffer.append(path);
         buffer.append(File.separator);
-//        buffer.append(currentUserId);
-//        buffer.append(File.separator);
+        buffer.append(currentUserId);
+        buffer.append(File.separator);
         buffer.append(dbName);
+        File file=new File(buffer.toString());
+        if(!file.getParentFile().exists()){
+            FileUtils.makeFolders(file.getParentFile().getAbsolutePath());
+        }
         return new File(buffer.toString());
     }
 
