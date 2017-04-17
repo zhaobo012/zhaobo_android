@@ -43,6 +43,12 @@ public class MainActivity extends BaseActivity {
         TextView tv= (TextView) findViewById(R.id.tv_hello);
         tv_velocityTracker= (TextView) findViewById(R.id.tv_velocity);
 
+        TopTitleBar topTitleBar= (TopTitleBar) findViewById(R.id.title_bar);
+        topTitleBar.setImmersive(false);
+        topTitleBar.setTitle("Title \n subTitle");
+        topTitleBar.addAction(new TopTitleBar.ImageAction(R.drawable.ic_account_balance_red_500_24dp));
+        topTitleBar.addAction(new TopTitleBar.ImageAction(R.drawable.ic_account_box_red_500_24dp));
+
         tv_velocityTracker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +93,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected boolean translucentStatusBar() {
         //是否显示透明的状态栏
-        return super.translucentStatusBar();
+        return false;
     }
 
     private void initVelovityTracker() {
